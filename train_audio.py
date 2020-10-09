@@ -43,7 +43,7 @@ def train():
     model = create_model()
     model.compile(optimizer='adam',
                   loss=losses.sparse_categorical_crossentropy,
-                  metrics=['accuracy'])
+                  metrics=['sparse_categorical_accuracy'])
     checkpointer = callbacks.ModelCheckpoint(filepath="./Output/checkpoint.hdf5", verbose=1, save_best_only=True)
     x_train, x_test, y_train, y_test = load_audio_data()
     model.fit(x_train,

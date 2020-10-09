@@ -7,6 +7,7 @@ import train_audio
 
 
 WAVE_OUTPUT_FILENAME = "./Output/output.wav"
+WAVE_OUTPUT_TEST_FILENAME = "./Output/03-01-05-01-02-01-03.wav"
 CHUNK = 1024
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
@@ -46,7 +47,8 @@ def record_audio():
 
 
 def predict_emotion():
-    audio_features = extract_audio_feature(WAVE_OUTPUT_FILENAME).split()
+    # audio_features = extract_audio_feature(WAVE_OUTPUT_FILENAME).split()
+    audio_features = extract_audio_feature(WAVE_OUTPUT_TEST_FILENAME).split()
     result1 = train_audio.predict(np.array(audio_features, dtype=float))
     #result2 = turicreate_classifier.predict(WAVE_OUTPUT_FILENAME)
 
@@ -63,9 +65,14 @@ def handle_onehot(onehot):
     confidence = max(onehot)
     itemindex = np.where(onehot == confidence)[0][0]
     emotion = emotions[itemindex]
+    print(itemindex)
+    if (itemindex<=2) | (itemindex>6):
+        print("you perform well")
+    else:
+        print("you need more practise")
     return emotion, confidence
 
 
 if __name__ == '__main__':
-    record_audio()
+    # record_audio()
     predict_emotion()
